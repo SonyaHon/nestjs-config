@@ -4,7 +4,6 @@ import { FetchPlugin, FetchVar } from "../lib";
 
 describe('fetch module', () => {
     const url = 'https://swapi.dev/api/people/1';
-    const failingUrl = 'https://swapi.dev/api/people/not-exising-id';
 
     test('should fetch correctly', async () => {
         @Config()
