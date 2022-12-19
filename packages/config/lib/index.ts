@@ -1,5 +1,5 @@
 export * from './module';
-export { Config } from './decorators';
+export { Config, InjectConfig } from './decorators';
 export { getConfigToken } from './nestjs-getters';
 
 export { IPlugin } from './plugin';
