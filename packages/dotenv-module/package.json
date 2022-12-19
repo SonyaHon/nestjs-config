@@ -47,5 +47,5 @@
     "@sonyahon/nestjs-config": "^0.0.2",
     "dotenv": "^16.0.3"
   },
-  "gitHead": "bf4d8492660a18330c662fa0753a376677bd8b55"
+  "gitHead": "cf94c6c251094b4d90fdf28dc0c5c20286a17682"
 }
