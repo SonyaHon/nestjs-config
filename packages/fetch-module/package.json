@@ -1,6 +1,6 @@
 {
   "name": "@sonyahon/nestjs-config-fetch",
-  "version": "0.0.7",
+  "version": "0.1.0",
   "description": "The fetch module for @sonyahon/nestjs-config",
   "keywords": [
     "dotenv",
@@ -44,7 +44,7 @@
     "@nestjs/common": "^9.2.1"
   },
   "dependencies": {
-    "@sonyahon/nestjs-config": "^0.0.8"
+    "@sonyahon/nestjs-config": "^0.1.0"
   },
   "gitHead": "affd32c70d6b5011ab224ad40a6bacc6c5fb99ad"
 }
