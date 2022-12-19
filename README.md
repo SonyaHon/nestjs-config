@@ -148,3 +148,42 @@ There is a handfull of ready to use transformers already available:
 * `Transformers.IntoBoolean` - string -> boolean conversion `'true' -> true` `'false' -> false`
 * `Transformers.IntoCommaSeperatedStringList(innerTransformer?: (v: string) => any))`
 a transformer generator functions that splits passed string by comma, to get an array of data and applies `innerTransformer` to each of them if needed e.g. `Transformers.CommaSeperatedStringList(Transformers.IntoInteger)` will produce `'123,234,456' -> [123, 234, 456]`
+### `FilesPlugin`
+A plugin to fetch files as config prop values
+#### Installation
+```bash
+    npm i --save-dev @sonyahon/nestjs-config-files
+    yarn add @sonyahon/nestjs-config-files
+```
+#### Usage
+Inlcuding plugin:
+```typescript
+// app.module.ts
+@Module({
+    imports: [
+        ConfigModule.register({
+            configs: [...Configs],
+            plugins: [...OtherPlugins, new FilesPlugin()]
+        })
+    ],
+})
+export class AppModule {}
+```
+`FilesPlugin` adds 1 new decorator:
+* `@FileVar(filePath: string, throwIfErrorReading: boolean = false)`
+  * `filePath` - file path to read file from
+  * `throwIfErrorReading` - by default if some error happens during reading of a file, it will be logged to stdout via `console.warn`, but no error will be thrown and the default value provided in the config will be used. In case you want to stop startup of Nest application and receive the thrown error, set this to `true`  
+  Example:
+  ```typescript
+  import { FileVar } from '@sonyahon/nestjs-config-files';
+
+  @Config()
+  class EnvConfig{
+    @FileVar('app/resources/certificate.crt')
+    cert: string = 'demo-certificate-text-here'; 
+
+    @FileVar('app/resources/another-file.txt', true)
+    anotherFile: string; 
+  }
+  ```
+  In the exampel above, `cert` will have the contents of the `app/resources/certificate.crt` file the `'demo-certificate-text-here'` if the file was not found. `anotherFile` will have the `app/resources/another-file.txt` file contents and will throw if this file is not presented.
