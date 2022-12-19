@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
-import { Injectable } from '@nestjs/common';
 import { Config, ConfigModule, getConfigToken, IAsyncPlugin, IPlugin } from '../lib';
+import { RequestUpdateProvider } from '../lib/request-update-provider';
 
 describe('config-module', () => {
     test('should be gettable', async () => {
@@ -89,5 +89,9 @@ describe('config-module', () => {
         const cfg = testingModule.get(getConfigToken(AsyncConfig));
         expect(cfg).toBeInstanceOf(AsyncConfig);
         expect(cfg.value).toBe(60);
+
+        const updateProvider = testingModule.get(RequestUpdateProvider);
+        await updateProvider.requestUpdateFor(AsyncPlugin);
+        expect(cfg.value).toBe(600);
     });
 });

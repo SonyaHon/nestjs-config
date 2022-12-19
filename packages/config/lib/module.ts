@@ -1,7 +1,8 @@
 import { Module, DynamicModule, OnApplicationBootstrap } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { fetchConfigSymbolMetadata } from './metadata-utils';
-import { IPlugin, UseAsyncPlugin } from './plugin';
+import { IAsyncPlugin, IPlugin, UseAsyncPlugin } from './plugin';
+import { RequestUpdateProvider } from './request-update-provider';
 
 export interface IConfigModuleRegisterOptions {
     configs: (new () => any)[],
@@ -52,7 +53,16 @@ export class ConfigModule implements OnApplicationBootstrap {
             ConfigModule.asyncProvidersTokens.push(asyncPlugin.provide);
             result.providers?.push(asyncPlugin);
         }
+        result.providers?.push(RequestUpdateProvider);
         return result;
+    }
+
+    static async updateConfig(moduleRef: ModuleRef, plugin: any) {
+        const pluginInstance = await moduleRef.resolve(plugin);
+        for (const cfgToken of ConfigModule.configTokens) {
+            const cfgInstance = await moduleRef.resolve(cfgToken);
+            await pluginInstance.apply(cfgInstance);
+        }
     }
 
     async onApplicationBootstrap() {
