@@ -1,11 +1,10 @@
 {
-  "name": "@sonyahon/nestjs-config",
-  "version": "0.0.8",
-  "description": "The core package providing a framework for other @sonyahon/nestjs-config-* to build on",
+  "name": "@sonyahon/nestjs-config-fetch",
+  "version": "0.0.7",
+  "description": "The fetch module for @sonyahon/nestjs-config",
   "keywords": [
-    "netjs",
-    "config",
-    "configuration"
+    "dotenv",
+    "nestjs-config"
   ],
   "author": "Pavel Volkov <volkov030@gmail.com>",
   "homepage": "https://github.com/SonyaHon/nestjs-config#readme",
@@ -43,6 +42,9 @@
   },
   "peerDependencies": {
     "@nestjs/common": "^9.2.1"
+  },
+  "dependencies": {
+    "@sonyahon/nestjs-config": "^0.0.8"
   },
   "gitHead": "affd32c70d6b5011ab224ad40a6bacc6c5fb99ad"
 }
