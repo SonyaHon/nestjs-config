@@ -1,14 +1,12 @@
 import 'reflect-metadata';
 
-interface PropertyDecoratorReturns<T> {
-    property: string | symbol,
-    value?: any,
-    params: T
-}
-
 export const makePropertyDecorator = <Params, Args extends unknown[]>(
     paramsMaker: (...args: Args) => Params
-): [(...args: Args) => PropertyDecorator, (cfgInstance: any) => (PropertyDecoratorReturns<Params>[])] => {
+): [(...args: Args) => PropertyDecorator, (cfgInstance: any) => ({
+    property: string | symbol,
+    value?: any,
+    params: Params
+}[])] => {
     const decoratorSymbol = Symbol();
     const propDecorator = (...args: Args): PropertyDecorator => {
         return (target, property) => {
@@ -16,11 +14,23 @@ export const makePropertyDecorator = <Params, Args extends unknown[]>(
             Reflect.defineMetadata(decoratorSymbol, [...exisingData, {
                 property,
                 params: paramsMaker(...args)
-            } as PropertyDecoratorReturns<Params>], target.constructor);
+            } as {
+                property: string | symbol,
+                value?: any,
+                params: Params
+            }], target.constructor);
         };
     }
-    const decoratorGetter = (cfgInstance: any): PropertyDecoratorReturns<Params>[] => {
-        return (Reflect.getMetadata(decoratorSymbol, cfgInstance.constructor) || []).map((data: PropertyDecoratorReturns<any>) => {
+    const decoratorGetter = (cfgInstance: any): {
+        property: string | symbol,
+        value?: any,
+        params: Params
+    }[] => {
+        return (Reflect.getMetadata(decoratorSymbol, cfgInstance.constructor) || []).map((data: {
+            property: string | symbol,
+            value?: any,
+            params: Params
+        }) => {
             return {
                 ...data,
                 value: cfgInstance[data.property]

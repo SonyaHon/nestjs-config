@@ -87,4 +87,64 @@ export class AppModule {}
 ```
 
 ## Available modules
-### `Dotenv`
+### `DotenvPlugin`
+A plugin to fetch enviroment variables
+#### Installation
+```bash
+    npm i --save-dev @sonyahon/nestjs-config-dotenv
+    yarn add @sonyahon/nestjs-config-dotenv
+```
+#### Usage
+Inlcuding plugin:
+```typescript
+// app.module.ts
+@Module({
+    imports: [
+        ConfigModule.register({
+            configs: [...Configs],
+            plugins: [...OtherPlugins, new DotenvPlugin()]
+        })
+    ],
+})
+export class AppModule {}
+```
+Dotenv plugin adds 2 decorators for the you to use:
+* `@DotenvVar(name: string, transofmer?: (value: string) => any)`
+  * `name` - environemt variable name e.g. `HOST` or `PORT`
+  * `trasnformer` - optional transformer function, to turn env string into something else, see [included transformers](#inlcuded-transformers)  
+  Example:
+  ```typescript
+  import { DotenvVar } from '@sonyahon/nestjs-config-dotenv';
+
+  @Config()
+  class EnvConfig{
+    @DotenvVar('HOST')
+    appHost: string = 'localhost';
+
+    @DotenvVar('PORT', v => parseInt(v))
+    appPort: number = 9090;
+  }
+  ```
+  As a result of this plugin transformation, props decorated with `DotenvVar` will get the value of `process.env.[name]`.
+* `@DotenvPrefx(name: string)`
+  * `name` - prefix name to use  
+  In some cases we want to use prefixes like `APP__[NAME]` for out env variables.
+  Example:
+  ```typescript
+  import { DotenvVar, DotenvPrefix } from '@sonyahon/nestjs-config-dotenv';
+
+  @Config()
+  @DotenvPrefix('ENV')
+  class EnvConfig{
+    @DotenvVar('PROP')
+    prop: string = 'value';
+  }
+  ```
+  In the example above `prop` property will get the value of `process.env.ENV__PROP` enviroment variable
+#### Inlcuded transformers
+There is a handfull of ready to use transformers already available:
+* `Transformers.IntoInteger` - string -> int conversion e.g. `'123' -> 123`  
+* `Transformers.IntoNumber` - string -> float conversion e.g. `'10.2' -> 10.2`
+* `Transformers.IntoBoolean` - string -> boolean conversion `'true' -> true` `'false' -> false`
+* `Transformers.IntoCommaSeperatedStringList(innerTransformer?: (v: string) => any))`
+a transformer generator functions that splits passed string by comma, to get an array of data and applies `innerTransformer` to each of them if needed e.g. `Transformers.CommaSeperatedStringList(Transformers.IntoInteger)` will produce `'123,234,456' -> [123, 234, 456]`
