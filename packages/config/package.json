@@ -25,7 +25,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc --project ./tsconfig.build.json",
-    "prepublish": "build"
+    "prepublish": "yarn build"
   },
   "bugs": {
     "url": "https://github.com/SonyaHon/nestjs-config/issues"
@@ -43,5 +43,6 @@
   },
   "peerDependencies": {
     "@nestjs/common": "^9.2.1"
-  }
+  },
+  "gitHead": "bf4d8492660a18330c662fa0753a376677bd8b55"
 }
