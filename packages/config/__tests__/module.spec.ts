@@ -1,5 +1,6 @@
 import { Test } from '@nestjs/testing';
-import { Config, ConfigModule, getConfigToken, IPlugin } from '../lib';
+import { Injectable } from '@nestjs/common';
+import { Config, ConfigModule, getConfigToken, IAsyncPlugin, IPlugin } from '../lib';
 
 describe('config-module', () => {
     test('should be gettable', async () => {
@@ -54,5 +55,39 @@ describe('config-module', () => {
         const cfg = testingModule.get(getConfigToken(DemoConfig));
         expect(cfg).toBeInstanceOf(DemoConfig);
         expect(cfg.value).toBe(42);
+    });
+
+    test('should apply async plugins', async () => {
+        @Config()
+        class DemoConfig { coef = 10; }
+
+        @Config()
+        class AsyncConfig { value = 6; }
+
+        class AsyncPlugin implements IAsyncPlugin {
+            constructor(private readonly demoConfig: DemoConfig) { }
+
+            async apply(target: any) {
+                console.debug(this.demoConfig);
+                target.value *= this.demoConfig.coef;
+            }
+        }
+
+        const testingModule = await Test.createTestingModule({
+            imports: [ConfigModule.registerAsync({
+                configs: [DemoConfig, AsyncConfig],
+                plugins: [],
+                asyncPlugins: [{
+                    provide: AsyncPlugin,
+                    useFactory: (cfg) => new AsyncPlugin(cfg),
+                    inject: [getConfigToken(DemoConfig)]
+                }]
+            })]
+        }).compile();
+        await testingModule.init();
+
+        const cfg = testingModule.get(getConfigToken(AsyncConfig));
+        expect(cfg).toBeInstanceOf(AsyncConfig);
+        expect(cfg.value).toBe(60);
     });
 });
