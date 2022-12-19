@@ -1,6 +1,6 @@
 {
   "name": "@sonyahon/nestjs-config-fetch",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "The fetch module for @sonyahon/nestjs-config",
   "keywords": [
     "dotenv",
