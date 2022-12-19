@@ -1602,11 +1602,6 @@
   dependencies:
     "@sinonjs/commons" "^1.7.0"
 
-"@sonyahon/nestjs-config@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@sonyahon/nestjs-config/-/nestjs-config-0.0.7.tgz#afc583581c21254541ea4a0d3c391a7681eb1511"
-  integrity sha512-1wNXs31OP2VobERA2K4tUh/9UixJcKwBdYN6ObcusimpKyUUs56IfKs+QBqSasf8pnXDMBxMmDvvwSsSQraKEA==
-
 "@tootallnate/once@2":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-2.0.0.tgz#f544a148d3ab35801c1f633a7441fd87c2e484bf"

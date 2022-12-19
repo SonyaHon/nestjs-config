@@ -16,11 +16,11 @@ describe('fetch module', () => {
         }
 
         const testingModule = await Test.createTestingModule({
-            imports: [ConfigModule.registerAsync(
+            imports: [ConfigModule.registerAsync({
                 configs: [DemoConfig],
                 plugins: [],
                 asyncPlugins: [FetchPlugin.Provider]
-            )]
+            })]
         }).compile();
         await testingModule.init();
         const cfg: DemoConfig = testingModule.get(getConfigToken(DemoConfig));
