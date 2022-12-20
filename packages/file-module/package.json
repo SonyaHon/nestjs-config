@@ -9,7 +9,8 @@
   "author": "Pavel Volkov <volkov030@gmail.com>",
   "homepage": "https://github.com/SonyaHon/nestjs-config#readme",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/index",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
