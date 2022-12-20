@@ -1,6 +1,6 @@
 {
   "name": "@sonyahon/nestjs-config",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "The core package providing a framework for other @sonyahon/nestjs-config-* to build on",
   "keywords": [
     "netjs",

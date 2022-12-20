@@ -1,6 +1,6 @@
 {
   "name": "@sonyahon/nestjs-config-dotenv",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "The dotenv module for @sonyahon/nestjs-config",
   "keywords": [
     "dotenv",
@@ -46,7 +46,7 @@
     "@nestjs/common": "^9.2.1"
   },
   "dependencies": {
-    "@sonyahon/nestjs-config": "^0.1.6",
+    "@sonyahon/nestjs-config": "^0.1.7",
     "dotenv": "^16.0.3"
   },
   "gitHead": "cb3b44bbd3a44fcc59f3fa65d11113cc00af5746"
