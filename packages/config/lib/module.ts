@@ -43,6 +43,7 @@ export class ConfigModule implements OnApplicationBootstrap {
             module: ConfigModule,
             global: true,
             providers,
+            exports: providers,
         }
     }
 
@@ -54,6 +55,7 @@ export class ConfigModule implements OnApplicationBootstrap {
             result.providers?.push(asyncPlugin);
         }
         result.providers?.push(RequestUpdateProvider);
+        result.exports = result.providers;
         return result;
     }
 
